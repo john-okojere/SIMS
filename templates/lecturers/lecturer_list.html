@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Lecturer List{% endblock %}
+
+{% block content %}
+    <h2>Lecturer List</h2>
+    <a href="{% url 'lecturer_create' %}" class="btn btn-primary my-3">Add New Lecturer</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lecturer in lecturers %}
+                <tr>
+                    <td>{{ lecturer.id }}</td>
+                    <td>{{ lecturer.user.username }}</td>
+                    <td>{{ lecturer.department }}</td>
+                    <td>
+                        <a href="{% url 'lecturer_detail' lecturer.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'lecturer_update' lecturer.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'lecturer_delete' lecturer.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Result List{% endblock %}
+
+{% block content %}
+    <h2>Result List</h2>
+    <a href="{% url 'result_create' %}" class="btn btn-primary my-3">Add New Result</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.id }}</td>
+                    <td>{{ result.student.user.username }}</td>
+                    <td>{{ result.course.course_name }}</td>
+                    <td>{{ result.grade }}</td>
+                    <td>
+                        <a href="{% url 'result_detail' result.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'result_update' result.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'result_delete' result.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

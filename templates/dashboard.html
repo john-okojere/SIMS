@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .d-flex{
+        gap: 1rem;
+        flex-wrap: wrap;
+
+    }
+</style>
+<img class="img-fluid" src="{% static 'img/hq.jpg' %}" alt="">
+<div class="my-3">
+    <hr>
+<h2>Welcome, {{ request.user.username }}</h2>
+<hr>
+<h1>Welcome to the Student Information Management System (SIMS) Dashboard</h1>
+    <p class="text-muted">This is your dashboard where you can navigate to various sections of the system.</p>
+</div>
+</div>
+<!-- User-Specific Dashboard Buttons -->
+<div class="dashboard-container container" style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% if is_admin %}
+        <!-- Admin Section -->
+        <div class="dashboard-box">
+            <h3 class="card-title">Admin Dashboard</h3><hr>
+            <div class = "d-flex">
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>View the complete list of students and their details.</p>
+                <a href="{% url 'student_list' %}" class="btn btn-primary">View All Students</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>Manage courses, update details, and add new ones.</p>
+                <a href="{% url 'course_list' %}" class="btn btn-info">Manage Courses</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>Access and review student medical records.</p>
+                <a href="#" class="btn btn-warning">View Medical Records</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>View all student results and academic performance.</p>
+                <a href="{% url 'result_list' %}" class="btn btn-success">View All Results</a>
+            </div>
+            </div>
+
+        </div>
+
+    {% elif is_lecturer %}
+        <!-- Lecturer Section -->
+        <div class="dashboard-box">
+            <h3 class="card-title">Lecturer Dashboard</h3><hr>
+            <div class = "d-flex">
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>View all students who have registered for your courses.</p>
+                <a href="{% url 'course_list' %}" class="btn btn-primary">View Registered Students</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>Input and manage grades for students in your courses.</p>
+                <a href="{% url 'lecturer_input_grades' %}" class="btn btn-secondary">Input Grades</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>Generate the exam timetable for your courses.</p>
+                <a href="{% url 'generate_exam_timetable' %}" class="btn btn-info">Generate Exam Timetable</a>
+            </div>
+            </div>
+
+        </div>
+
+    {% elif is_student %}
+        <!-- Student Section -->
+        <div class="dashboard-box">
+            <h3 class="card-title">Student Dashboard</h3><hr>
+            <div class = "d-flex">
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>View your exam results and academic performance.</p>
+                <a href="{% url 'student_list' %}" class="btn btn-primary">View Results</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>Generate your personal timetable based on registered courses.</p>
+                <a href="{% url 'generate_student_timetable' %}" class="btn btn-info">Generate Timetable</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>View and update your personal profile details.</p>
+                <a href="{% url 'student_profile' %}" class="btn btn-warning">View Profile</a>
+            </div>
+            </div>
+
+        </div>
+
+    {% elif is_clinic_staff %}
+        <!-- Clinic Staff Section -->
+        <div class="dashboard-box">
+            <h3 class="card-title">Clinic Staff Dashboard</h3><hr>
+            <div class = "d-flex">
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>View student medical records to assist in treatment.</p>
+                <a href="{% url 'view_student_medical_records' %}" class="btn btn-primary">View Student Medical Records</a>
+            </div>
+            
+            <div  class="card" style="width: 18rem; padding: 20px;">
+                <p>Update student medical records with new information.</p>
+                <a href="{% url 'update_medical_records' %}" class="btn btn-secondary">Update Medical Records</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}

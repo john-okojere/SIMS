@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Clinic Staff List{% endblock %}
+
+{% block content %}
+    <h2>Clinic Staff List</h2>
+    <a href="{% url 'clinicstaff_create' %}" class="btn btn-primary my-3">Add New Clinic Staff</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in clinicstaffs %}
+                <tr>
+                    <td>{{ staff.id }}</td>
+                    <td>{{ staff.user.username }}</td>
+                    <td>
+                        <a href="{% url 'clinicstaff_detail' staff.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'clinicstaff_update' staff.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'clinicstaff_delete' staff.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

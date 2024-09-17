@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Result Detail{% endblock %}
+
+{% block content %}
+    <h2>Result Detail</h2>
+    <p><strong>Student:</strong> {{ result.student.user.username }}</p>
+    <p><strong>Course:</strong> {{ result.course.course_name }} ({{ result.course.course_id }})</p>
+    <p><strong>Grade:</strong> {{ result.grade }}</p>
+    
+    <a href="{% url 'result_update' result.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'result_delete' result.id %}" class="btn btn-danger">Delete</a>
+{% endblock %}

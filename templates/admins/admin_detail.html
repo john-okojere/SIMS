@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Clinic Staff Detail{% endblock %}
+
+{% block content %}
+    <h2>Clinic Staff Detail</h2>
+    <p><strong>Username:</strong> {{ clinicstaff.user.username }}</p>
+    <p><strong>Email:</strong> {{ clinicstaff.user.email }}</p>
+    
+    <a href="{% url 'clinicstaff_update' clinicstaff.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'clinicstaff_delete' clinicstaff.id %}" class="btn btn-danger">Delete</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Input Grades{% endblock %}
+
+{% block content %}
+<h2>Input Grades for Your Courses</h2>
+
+{% for course, students in course_students.items %}
+    <h3>{{ course.course_name }} ({{ course.course_id }})</h3>
+    <form method="post" action="{% url 'submit_grades' %}">
+        {% csrf_token %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Current Grade</th>
+                    <th>New Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.result_set.filter(course=course).first.grade }}</td>
+                    <td>
+                        <input type="text" name="grade_{{ student.id }}" class="form-control" required>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Submit Grades</button>
+    </form>
+{% endfor %}
+
+{% endblock %}
