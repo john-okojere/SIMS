@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser as User
 
 # Custom User model with roles
    
@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 # Student model (linked to the User model)
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    
     year_of_study = models.IntegerField()
     courses_registered = models.ManyToManyField('Course', related_name='students')
 
@@ -56,4 +55,11 @@ class Result(models.Model):
         return f"{self.student.user.username} - {self.course.course_name} : {self.grade}"
 
 
+class Timetable(models.Model):
+    day = models.CharField(max_length=10)  # e.g., "Monday"
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    time = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.course} on {self.day} at {self.time}"
 

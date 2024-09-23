@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Timetable{% endblock %}
+
+{% block content %}
+<h2>Your Timetable</h2>
+
+{% if timetable %}
+    {% for day in days %}
+        <h3>{{ day }}</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% with day_courses=0 %}
+                    {% for entry in timetable %}
+                        {% if entry.day == day %}
+                            <tr>
+                                <td>{{ entry.course }}</td>
+                                <td>{{ entry.time }}</td>
+                            </tr>
+                            {% with day_courses=day_courses|add:1 %}
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </tbody>
+        </table>
+        <br>
+    {% endfor %}
+{% else %}
+    <p>No courses registered or timetable generated yet.</p>
+{% endif %}
+{% endblock %}

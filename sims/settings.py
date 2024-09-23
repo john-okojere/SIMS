@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-j*y)lt^xp-mnojdwx8n9@@&w6(y**0p7!7u_@#cl(bk-nl@ytw
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Application definition
 
@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ims',
     'users',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

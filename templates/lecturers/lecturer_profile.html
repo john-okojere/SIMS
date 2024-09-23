@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Lecturer Profile{% endblock %}
+
+{% block content %}
+<div class="lecturer-profile">
+    <h2>{{ lecturer.user }}'s Profile</h2>
+
+    <div class="profile-info">
+        <p><strong>Department:</strong> {{ lecturer.department }}</p>
+        <p><strong>Email:</strong> {{ lecturer.user.email }}</p>
+    </div>
+
+    <h3>Courses Taught</h3>
+    {% if courses_taught %}
+        <ul>
+            {% for course in courses_taught %}
+                <li>{{ course.course_name }} ({{ course.course_id }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You are not currently assigned to any courses.</p>
+    {% endif %}
+    <a href="{% url 'lecturer_update' lecturer.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'lecturer_delete' lecturer.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

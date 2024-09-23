@@ -5,6 +5,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from .models import Student, Lecturer, Admin, ClinicStaff, Course, Result
 
+def is_admin(user):
+    return user.is_authenticated and user.groups.filter(name='Admin').exists()
+
 # Student Views
 class StudentListView(ListView):
     model = Student
@@ -23,9 +26,9 @@ class StudentCreateView(CreateView):
 
 class StudentUpdateView(UpdateView):
     model = Student
-    fields = ['user', 'year_of_study', 'courses_registered']
+    fields = ['year_of_study', 'courses_registered']
     template_name = 'students/student_form.html'
-    success_url = reverse_lazy('student_list')
+    success_url = reverse_lazy('student_view_timetable')
 
 class StudentDeleteView(DeleteView):
     model = Student
@@ -50,9 +53,9 @@ class LecturerCreateView(CreateView):
 
 class LecturerUpdateView(UpdateView):
     model = Lecturer
-    fields = ['user', 'department', 'courses_taught']
+    fields = ['department', 'courses_taught']
     template_name = 'lecturers/lecturer_form.html'
-    success_url = reverse_lazy('lecturer_list')
+    success_url = reverse_lazy('lecturer_profile')
 
 class LecturerDeleteView(DeleteView):
     model = Lecturer
@@ -184,7 +187,15 @@ def dashboard(request):
         'is_clinic_staff': is_clinic_staff,
     }
     return render(request, 'dashboard.html', context)
+
 import random
+from django.contrib.auth.decorators import user_passes_test
+from .models import Timetable
+
+import random
+from django.shortcuts import render
+from .models import Course, Timetable
+
 def generate_timetable(request):
     courses = Course.objects.all()
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -196,37 +207,122 @@ def generate_timetable(request):
         ("2:00 PM", "3:00 PM"),   # 1 hour
         ("3:00 PM", "5:00 PM"),   # 2 hours
     ]
-    
-    # Sample timetable structure (you can customize this)
-    timetable = {}
-    
-    # Example logic to generate timetable based on courses
-    # Track assigned time slots to avoid overlapping
+
+    # Clear existing timetable entries
+    Timetable.objects.all().delete()
+
     assigned_slots = set()
 
-    # Generate the timetable for each course
     for course in courses:
-        # Randomly assign a day
-        day = random.choice(days)
+        # Assign time slots based on the course's credit hours
+        slots_needed = course.credits  # Number of hours the course needs per week
         
-        # Ensure unique time slot selection for the day (no overlapping)
-        while True:
+        while slots_needed > 0:
+            day = random.choice(days)
             time_slot = random.choice(time_slots)
+            
+            # Ensure no overlapping time slots for the same day
             if (day, time_slot) not in assigned_slots:
+                # Save the course to the timetable
+                Timetable.objects.create(
+                    day=day,
+                    course=course,
+                    time=f"{time_slot[0]} - {time_slot[1]}"
+                )
+                
+                # Mark the slot as assigned to prevent overlap
                 assigned_slots.add((day, time_slot))
-                break
-        
-        # Add course to the timetable
-        if day not in timetable:
-            timetable[day] = []
-        
-        timetable[day].append({
-            'course_name': course.course_name,
-            'time': f"{time_slot[0]} - {time_slot[1]}",
+                
+                # Reduce the required number of slots by 1 (or 2, depending on the time slot length)
+                slots_needed -= 1 if time_slot[0] == "8:00 AM" else 2
+
+    return render(request, 'timetable_generated.html', {'message': 'Timetable generated and saved successfully!'})
+
+def view_timetable(request):
+    timetable_entries = Timetable.objects.all()
+    lecturer = Lecturer.objects.all()
+    timetable = {}
+
+    for entry in timetable_entries:
+        if entry.day not in timetable:
+            timetable[entry.day] = []
+        timetable[entry.day].append({
+            'course': entry.course,
+            'time': entry.time,
         })
+    return render(request, 'timetable_view.html', {'timetable': timetable, "lecturer":lecturer})
+
+from .forms import CourseRegistrationForm
+# Course registration view
+def register_courses(request):
+    student = request.user.student  # Assuming that the user is logged in as a student
+    if request.method == 'POST':
+        form = CourseRegistrationForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('view_timetable')  # Redirect to timetable view after successful registration
+    else:
+        form = CourseRegistrationForm(instance=student)
     
-    # Render the timetable to a template
-    return render(request, 'timetable.html', {'timetable': timetable})
+    return render(request, 'students/course_registration.html', {'form': form})
+
+# View timetable for the registered courses
+def student_view_timetable(request):
+    student = request.user.student
+    timetable_entries = Timetable.objects.filter(course__in=student.courses_registered.all())
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]  # List of days
+    return render(request, 'students/student_timetable.html', {'timetable': timetable_entries, 'days': days})
+
+
+# View timetable for the registered courses
+def lecturer_view_timetable(request):
+    lecturer = request.user.lecturer
+    timetable_entries = Timetable.objects.filter(course__in=lecturer.courses_taught.all())
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]  # List of days
+    return render(request, 'students/student_timetable.html', {'timetable': timetable_entries, 'days': days})
+
+
+def student_profile(request):
+    student = Student.objects.get(user=request.user) # Assuming the user is authenticated as a student
+    courses = student.courses_registered.all()  # Get the registered courses
+    return render(request, 'students/student_detail.html', {'student': student, 'courses': courses})
+
+def lecturer_profile(request):
+    lecturer = request.user.lecturer  # Get the lecturer's profile
+    courses_taught = lecturer.courses_taught.all()
+    # Render the lecturer's profile page
+    return render(request, 'lecturers/lecturer_profile.html', {
+        'lecturer': lecturer,
+        'courses_taught': courses_taught
+    })
+
+from django.http import JsonResponse
+
+def update_year_of_study(request):
+    if request.method == 'POST':
+        year_of_study = request.POST.get('year_of_study')
+        if year_of_study.isdigit():
+            student = Student.objects.create(user=request.user, year_of_study = int(year_of_study))
+            student.save()
+            return JsonResponse({'success': True, 'message': 'Year of study updated successfully!'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid input. Please enter a valid year.'})
+
+    return render(request, 'update_year_of_study.html')
+
+
+def update_department(request):
+    if request.method == 'POST':
+        department = request.POST.get('department')
+        if department:
+            lecturer = Lecturer.objects.create(user=request.user, department = department)
+            lecturer.save()
+            return JsonResponse({'success': True, 'message': 'Department updated successfully!'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid input. Please enter a valid department.'})
+
+    return render(request, 'update_department.html')
+
 
 def lecturer_view_students(request):
     # Get the logged-in lecturer
@@ -247,32 +343,54 @@ def lecturer_view_students(request):
 
 
 def lecturer_input_grades(request):
-    # Get the courses the lecturer is teaching
-    lecturer = Lecturer.objects.get(user=request.user)
-    courses_taught = lecturer.courses_taught.all()
+    # Assume this view is for a specific lecturer
+    lecturer = request.user.lecturer
 
-    # Get the registered students for each course
+    # Get all courses taught by the lecturer
+    courses = lecturer.courses_taught.all()
+
+    # Prepare a dictionary to map courses to their students and current grades
     course_students = {}
-    for course in courses_taught:
-        students = course.students.all()
-        course_students[course] = students
 
-    # Render template for inputting grades
+    for course in courses:
+        students = course.students.all()  # All students registered for this course
+        student_grades = []
+
+        for student in students:
+            # Find the result for this student and course, or set it as None
+            result = Result.objects.filter(student=student, course=course).first()
+            student_grades.append({
+                'student': student,
+                'grade': result.grade if result else "Not graded"
+            })
+        course_students[course] = student_grades
     return render(request, 'dashboard/lecturer_input_grades.html', {'course_students': course_students})
 
 def submit_grades(request):
     if request.method == 'POST':
-        lecturer = Lecturer.objects.get(user=request.user)
-        courses_taught = lecturer.courses_taught.all()
+        course_id = request.POST.get('course_id')
+        student_id = request.POST.get('student_id')
+        new_grade = request.POST.get('new_grade')
 
-        for course in courses_taught:
-            students = course.students.all()
-            for student in students:
-                grade_key = f"grade_{student.id}"
-                if grade_key in request.POST:
-                    new_grade = request.POST[grade_key]
-                    result = Result.objects.get(student=student, course=course)
-                    result.grade = new_grade
-                    result.save()
+        # Retrieve the course and student objects
+        course = Course.objects.get(id=course_id)
+        student = Student.objects.get(id=student_id)
 
-        return redirect('lecturer_view_students')
+        # Update or create the result
+        result, created = Result.objects.get_or_create(student=student, course=course)
+        result.grade = new_grade
+        result.save()
+
+        # Redirect back to the input grades page
+        return redirect('lecturer_input_grades')
+
+def lecturer_courses_view(request):
+    lecturer = request.user.lecturer  # Get the lecturer from the logged-in user
+    courses_taught = lecturer.courses_taught.all()  # Get all courses assigned to the lecturer
+
+    context = {
+        'lecturer': lecturer,
+        'courses_taught': courses_taught,
+    }
+
+    return render(request, 'lecturers/lecturer_courses.html', context)

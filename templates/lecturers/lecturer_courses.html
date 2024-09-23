@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Courses{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ lecturer.user.username }}</h2>
+<h3>Department: {{ lecturer.department }}</h3>
+
+<h4>Courses You Are Teaching:</h4>
+
+{% if courses_taught %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses_taught %}
+                <tr>
+                    <td>{{ course.course_id }}</td>
+                    <td>{{ course.course_name }}</td>
+                    <td>{{ course.credits }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>You are not assigned to any courses at the moment.</p>
+{% endif %}
+{% endblock %}

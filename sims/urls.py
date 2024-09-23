@@ -34,16 +34,20 @@ urlpatterns = [
     # Student URLs
     path('students/', views.StudentListView.as_view(), name='student_list'),
     path('students/<int:pk>/', views.StudentDetailView.as_view(), name='student_detail'),
+    path('student-profile/', views.student_profile, name='student_profile'),
     path('students/create/', views.StudentCreateView.as_view(), name='student_create'),
     path('students/update/<int:pk>/', views.StudentUpdateView.as_view(), name='student_update'),
     path('students/delete/<int:pk>/', views.StudentDeleteView.as_view(), name='student_delete'),
+    path('update-year-of-study/', views.update_year_of_study, name='update_year_of_study'),
 
     # Lecturer URLs
     path('lecturers/', views.LecturerListView.as_view(), name='lecturer_list'),
     path('lecturers/<int:pk>/', views.LecturerDetailView.as_view(), name='lecturer_detail'),
+    path('lecturers-profile/', views.lecturer_profile, name='lecturer_profile'),
     path('lecturers/create/', views.LecturerCreateView.as_view(), name='lecturer_create'),
     path('lecturers/update/<int:pk>/', views.LecturerUpdateView.as_view(), name='lecturer_update'),
     path('lecturers/delete/<int:pk>/', views.LecturerDeleteView.as_view(), name='lecturer_delete'),
+    path('update-department/', views.update_department, name='update_department'),
 
     # Admin URLs
     path('admins/', views.AdminListView.as_view(), name='admin_list'),
@@ -73,12 +77,18 @@ urlpatterns = [
     path('results/update/<int:pk>/', views.ResultUpdateView.as_view(), name='result_update'),
     path('results/delete/<int:pk>/', views.ResultDeleteView.as_view(), name='result_delete'),
 
-    path('generate-timetable/', views.generate_timetable, name='generate_timetable'),
+    path('generate_timetable/', views.generate_timetable, name='generate_timetable'),
+    path('view_timetable/', views.view_timetable, name='view_timetable'),
     path('lecturer/students/', views.lecturer_view_students, name='lecturer_view_students'),
 
     # Placeholder for inputting grades
-    path('lecturer/grades/',views.lecturer_input_grades, name='lecturer_input_grades'),
-    
+    path('lecturer/grades/', views.lecturer_input_grades, name='lecturer_input_grades'),
+    path('lecturer/courses/', views.lecturer_courses_view, name='lecturer_courses'),
+
+    path('register-courses/', views.register_courses, name='register_courses'),
+    path('student/view-timetable/', views.student_view_timetable, name='student_view_timetable'),
+    path('lecturer/view-timetable/', views.lecturer_view_timetable, name='lecturer_view_timetable'),
+    path('submit-grades/', views.submit_grades, name='submit_grades'),
 ]
 if settings.DEBUG:  # Only add this during development
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

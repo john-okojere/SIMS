@@ -9,7 +9,6 @@
 <div class="dashboard-buttons">
     <a href="{% url 'lecturer_view_students' %}" class="btn btn-primary">View Registered Students</a>
     <a href="{% url 'lecturer_input_grades' %}" class="btn btn-secondary">Input Grades</a>
-    <a href="{% url 'generate_exam_timetable' %}" class="btn btn-info">Generate Exam Timetable</a>
     <a href="{% url 'lecturer_profile' %}" class="btn btn-warning">Profile</a>
 </div>
 
@@ -17,7 +16,7 @@
 
 <!-- Courses and Registered Students -->
 <h2>Your Courses and Registered Students</h2>
-
+<br>
 {% for course, students in course_students.items %}
     <h3>{{ course.course_name }} ({{ course.course_id }})</h3>
     <table class="table table-bordered">
@@ -42,6 +41,6 @@
             {% endfor %}
         </tbody>
     </table>
+<br>
 {% endfor %}
-
 {% endblock %}

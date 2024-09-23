@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from .models import Student, Lecturer, Admin, ClinicStaff, Course, Result
+from .models import Student, Lecturer, Admin, ClinicStaff, Course, Result, Timetable
 
 
 # Register the Student model
@@ -43,3 +43,13 @@ class ResultAdmin(admin.ModelAdmin):
     search_fields = ('student__user__username', 'course__course_name', 'grade')
     list_filter = ('grade',)  # to filter results by grade
 
+
+# Admin model for Timetable
+class TimetableAdmin(admin.ModelAdmin):
+    list_display = ('course', 'day', 'time')  # Display course name, day, and time in the admin list view
+    list_filter = ('day', 'course')  # Add filters by day and course name
+    search_fields = ('course',)  # Enable search by course name
+    ordering = ('day', 'time')  # Order by day and time
+
+# Register the Timetable model in the admin site
+admin.site.register(Timetable, TimetableAdmin)

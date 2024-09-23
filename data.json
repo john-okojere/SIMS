@@ -1,0 +1,56 @@
+{
+    "students": [
+        {"username": "student1", "email": "student1@example.com", "year_of_study": 1},
+        {"username": "student2", "email": "student2@example.com", "year_of_study": 2},
+        {"username": "student3", "email": "student3@example.com", "year_of_study": 3},
+        {"username": "student4", "email": "student4@example.com", "year_of_study": 1},
+        {"username": "student5", "email": "student5@example.com", "year_of_study": 2},
+        {"username": "student6", "email": "student6@example.com", "year_of_study": 3},
+        {"username": "student7", "email": "student7@example.com", "year_of_study": 4},
+        {"username": "student8", "email": "student8@example.com", "year_of_study": 4}
+    ],
+    "lecturers": [
+        {"username": "lecturer1", "email": "lecturer1@example.com", "department": "Computer Science"},
+        {"username": "lecturer2", "email": "lecturer2@example.com", "department": "Mathematics"},
+        {"username": "lecturer3", "email": "lecturer3@example.com", "department": "Physics"},
+        {"username": "lecturer4", "email": "lecturer4@example.com", "department": "Biology"}
+    ],
+    "admins": [
+        {"username": "admin1", "email": "admin1@example.com"},
+        {"username": "admin2", "email": "admin2@example.com"}
+    ],
+    "clinic_staff": [
+        {"username": "staff1", "email": "staff1@example.com"},
+        {"username": "staff2", "email": "staff2@example.com"}
+    ],
+    "courses": [
+        {"course_id": "CS101", "course_name": "Introduction to Computer Science", "credits": 3},
+        {"course_id": "CS102", "course_name": "Data Structures", "credits": 3},
+        {"course_id": "CS103", "course_name": "Web Development", "credits": 4},
+        {"course_id": "MAT101", "course_name": "Calculus I", "credits": 3},
+        {"course_id": "PHY101", "course_name": "Physics I", "credits": 4},
+        {"course_id": "BIO101", "course_name": "Biology I", "credits": 3},
+        {"course_id": "CS104", "course_name": "Algorithms", "credits": 4},
+        {"course_id": "CS105", "course_name": "Operating Systems", "credits": 3}
+    ],
+    "results": [
+        {"student_username": "student1", "course_id": "CS101", "grade": "A"},
+        {"student_username": "student2", "course_id": "CS102", "grade": "B"},
+        {"student_username": "student3", "course_id": "CS103", "grade": "C"},
+        {"student_username": "student4", "course_id": "MAT101", "grade": "A"},
+        {"student_username": "student5", "course_id": "PHY101", "grade": "B"},
+        {"student_username": "student6", "course_id": "BIO101", "grade": "A"},
+        {"student_username": "student7", "course_id": "CS104", "grade": "C"},
+        {"student_username": "student8", "course_id": "CS105", "grade": "B"}
+    ],
+    "timetables": [
+        {"day": "Monday", "course_name": "Introduction to Computer Science", "time": "8:00 AM - 9:00 AM"},
+        {"day": "Monday", "course_name": "Calculus I", "time": "9:00 AM - 10:00 AM"},
+        {"day": "Tuesday", "course_name": "Data Structures", "time": "10:00 AM - 12:00 PM"},
+        {"day": "Tuesday", "course_name": "Physics I", "time": "12:00 PM - 1:00 PM"},
+        {"day": "Wednesday", "course_name": "Web Development", "time": "1:00 PM - 3:00 PM"},
+        {"day": "Wednesday", "course_name": "Biology I", "time": "3:00 PM - 4:00 PM"},
+        {"day": "Thursday", "course_name": "Algorithms", "time": "8:00 AM - 10:00 AM"},
+        {"day": "Thursday", "course_name": "Operating Systems", "time": "10:00 AM - 12:00 PM"}
+    ]
+}

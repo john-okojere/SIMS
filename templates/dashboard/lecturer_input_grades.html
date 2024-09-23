@@ -4,33 +4,48 @@
 
 {% block content %}
 <h2>Input Grades for Your Courses</h2>
-
+<br>
 {% for course, students in course_students.items %}
     <h3>{{ course.course_name }} ({{ course.course_id }})</h3>
-    <form method="post" action="{% url 'submit_grades' %}">
-        {% csrf_token %}
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Student Name</th>
-                    <th>Current Grade</th>
-                    <th>New Grade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for student in students %}
-                <tr>
-                    <td>{{ student.user.username }}</td>
-                    <td>{{ student.result_set.filter(course=course).first.grade }}</td>
-                    <td>
-                        <input type="text" name="grade_{{ student.id }}" class="form-control" required>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Current Grade</th>
+                <th>New Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student_info in students %}
+            <tr>
+                <td>{{ student_info.student.user.username }}</td>
+                <td>{{ student_info.grade }}</td>
+                <td>
+                    <form method="post" action="{% url 'submit_grades' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="course_id" value="{{ course.id }}">
+                        <input type="hidden" name="student_id" value="{{ student_info.student.id }}">
+                        <select name="new_grade" id="" class="form-control" required>
+                            <option value="">Select Grade</option>
+                            <option value="A1">A1</option>
+                            <option value="B2">B2</option>
+                            <option value="C3">C3</option>
+                            <option value="D4">D4</option>
+                            <option value="F9">F9</option>
+                        </select>
                     </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-success">Submit Grades</button>
-    </form>
+                <td>
+                        <button type="submit" class="btn btn-success">Submit Grade</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <hr>
 {% endfor %}
 
 {% endblock %}
