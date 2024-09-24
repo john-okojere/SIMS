@@ -93,6 +93,11 @@ urlpatterns = [
     path('student/view-timetable/', views.student_view_timetable, name='student_view_timetable'),
     path('lecturer/view-timetable/', views.lecturer_view_timetable, name='lecturer_view_timetable'),
     path('submit-grades/', views.submit_grades, name='submit_grades'),
+
+    path('create_department/', views.create_department, name='create_department'),
+    path('create_level/', views.create_level, name='create_level'),
+    path('create_course/', views.create_course, name='create_course'),
+    path('fetch-available-advisers/', views.fetch_available_advisers, name='fetch_available_advisers'),
 ]
 if settings.DEBUG:  # Only add this during development
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -449,3 +449,63 @@ def lecturer_courses_view(request):
     }
 
     return render(request, 'lecturers/lecturer_courses.html', context)
+
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from .forms import DepartmentForm, LevelForm, CourseForm
+from django.contrib.auth.decorators import login_required
+
+# View to create a new department
+@login_required
+def create_department(request):
+    if request.method == 'POST':
+        form = DepartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True, 'message': 'Department created successfully!'})
+    return JsonResponse({'success': False, 'message': 'Failed to create department.'})
+
+from django.http import JsonResponse
+from .models import Department, Level, Lecturer
+
+def create_level(request):
+    if request.method == 'POST':
+        level = request.POST.get('level')
+        department_id = request.POST.get('department')
+        adviser_id = request.POST.get('adviser')
+
+        department = Department.objects.get(id=department_id)
+
+        # Check if the level already exists in the department
+        if Level.objects.filter(department=department, level=level).exists():
+            return JsonResponse({'success': False, 'message': 'This level already exists for the department.'})
+
+        adviser = Lecturer.objects.get(id=adviser_id)
+
+        # Create the new level
+        Level.objects.create(level=level, department=department, adviser=adviser)
+
+        return JsonResponse({'success': True, 'message': 'Level created successfully.'})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request.'})
+
+def fetch_available_advisers(request):
+    department_id = request.GET.get('department_id')
+
+    # Fetch all lecturers who are not already advisers for the given department
+    assigned_advisers = Level.objects.all().values_list('adviser', flat=True)
+    available_lecturers = Lecturer.objects.exclude(id__in=assigned_advisers)
+
+    lecturer_data = [{'id': lecturer.id, 'user': {'username': lecturer.user.username}} for lecturer in available_lecturers]
+
+    return JsonResponse({'lecturers': lecturer_data})
+
+# View to create a new course
+@login_required
+def create_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True, 'message': 'Course created successfully!'})
+    return JsonResponse({'success': False, 'message': 'Failed to create course.'})
