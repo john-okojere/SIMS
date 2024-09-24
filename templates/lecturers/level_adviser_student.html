@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Lecturer Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ request.user.username }}</h2>
+
+<!-- Dashboard Navigation Buttons -->
+<div class="dashboard-buttons">
+    <a href="{% url 'lecturer_view_students' %}" class="btn btn-primary">View Course Students</a>
+    <a href="{% url 'lecturer_input_grades' %}" class="btn btn-secondary">Input Grades</a>
+    <a href="{% url 'lecturer_profile' %}" class="btn btn-warning">Profile</a>
+</div>
+
+<hr/>
+
+<!-- Courses and Registered Students -->
+<h2> Registered Student in {{levels.level}} level </h2>
+<br>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Courses</th>
+                <th>Carry Over</th>
+                <th>View Student</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.user.username }}</td>
+                <td>{{ student.user.email }}</td>
+                <td><ol>{% for course in student.courses_registered.all %} <li>{{course }}</li> {% endfor %}</ol></td>
+                <td><ol>{% for course in student.carry_over.all %} <li>{{course }}</li> {% endfor %}</ol></td>
+                <td><a href="{% url 'student_detail' student.id %}">View</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No students registered for this course.</td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    {% endblock %}

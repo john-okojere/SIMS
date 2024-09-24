@@ -2,25 +2,50 @@ from django.db import models
 from users.models import CustomUser as User
 
 # Custom User model with roles
-   
-
-# Student model (linked to the User model)
-class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    year_of_study = models.IntegerField()
-    courses_registered = models.ManyToManyField('Course', related_name='students')
-
+class Department(models.Model):
+    name = models.CharField(max_length=250)
     def __str__(self):
-        return self.user.username
+        return self.name
+
 
 # Lecturer model (linked to the User model)
 class Lecturer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    department = models.CharField(max_length=100)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     courses_taught = models.ManyToManyField('Course', related_name='lecturers')
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
+
+levels = (
+    ('100','100'),
+    ('200','200'),
+    ('300','300'),
+    ('400','400'),
+    ('500','500')
+)
+class Level(models.Model):
+    level = models.CharField(max_length=255, choices=levels)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    adviser = models.OneToOneField(Lecturer, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.level
+
+# Student model (linked to the User model)
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    courses_registered = models.ManyToManyField('Course', related_name='students')
+    carry_over = models.ManyToManyField('Course', null=True, blank=True)
+    
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+
 
 # Admin model (linked to the User model)
 class Admin(models.Model):

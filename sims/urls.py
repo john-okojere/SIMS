@@ -39,6 +39,8 @@ urlpatterns = [
     path('students/update/<int:pk>/', views.StudentUpdateView.as_view(), name='student_update'),
     path('students/delete/<int:pk>/', views.StudentDeleteView.as_view(), name='student_delete'),
     path('update-year-of-study/', views.update_year_of_study, name='update_year_of_study'),
+    path('get-levels/<int:department_id>/', views.get_levels, name='get_levels'),
+    path('approve-student/<int:student_id>/', views.approve_student, name='approve_student'),
 
     # Lecturer URLs
     path('lecturers/', views.LecturerListView.as_view(), name='lecturer_list'),
@@ -48,6 +50,8 @@ urlpatterns = [
     path('lecturers/update/<int:pk>/', views.LecturerUpdateView.as_view(), name='lecturer_update'),
     path('lecturers/delete/<int:pk>/', views.LecturerDeleteView.as_view(), name='lecturer_delete'),
     path('update-department/', views.update_department, name='update_department'),
+    path('level-adiviser/', views.level_adiviser, name='level_adiviser'),
+    path('level-adiviser-students/', views.level_adiviser_students, name='level_adiviser_students'),
 
     # Admin URLs
     path('admins/', views.AdminListView.as_view(), name='admin_list'),

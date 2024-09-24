@@ -1,55 +1,72 @@
 from django.contrib import admin
+from .models import Department, Student, Lecturer, Level, Admin as AdminUser, ClinicStaff, Course, Result, Timetable
 
-from django.contrib import admin
-from .models import Student, Lecturer, Admin, ClinicStaff, Course, Result, Timetable
+# Admin interface for the Department model
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
 
 
-# Register the Student model
+# Admin interface for the Student model
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'year_of_study')
-    search_fields = ('user__username', 'year_of_study')
-    filter_horizontal = ('courses_registered',)  # for many-to-many relationship
+    list_display = ('user', 'department', 'level', 'approved')
+    list_filter = ('department', 'level', 'approved')
+    search_fields = ('user__username', 'user__email', 'department__name')
+    filter_horizontal = ('courses_registered',)
 
-# Register the Lecturer model
+
+# Admin interface for the Lecturer model
 @admin.register(Lecturer)
 class LecturerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'department')
-    search_fields = ('user__username', 'department')
-    filter_horizontal = ('courses_taught',)  # for many-to-many relationship
+    list_display = ('user', 'department', 'approved')
+    list_filter = ('department', 'approved')
+    search_fields = ('user__username', 'user__email', 'department__name')
+    filter_horizontal = ('courses_taught',)
 
-# Register the Admin model
-@admin.register(Admin)
-class AdminAdmin(admin.ModelAdmin):
+
+# Admin interface for the Level model
+@admin.register(Level)
+class LevelAdmin(admin.ModelAdmin):
+    list_display = ('level', 'department', 'adviser')
+    list_filter = ('level', 'department')
+    search_fields = ('level', 'department__name', 'adviser__user__username')
+
+
+# Admin interface for the AdminUser model
+@admin.register(AdminUser)
+class AdminUserAdmin(admin.ModelAdmin):
     list_display = ('user',)
-    search_fields = ('user__username',)
+    search_fields = ('user__username', 'user__email')
 
-# Register the ClinicStaff model
+
+# Admin interface for the ClinicStaff model
 @admin.register(ClinicStaff)
 class ClinicStaffAdmin(admin.ModelAdmin):
     list_display = ('user',)
-    search_fields = ('user__username',)
+    search_fields = ('user__username', 'user__email')
 
-# Register the Course model
+
+# Admin interface for the Course model
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('course_id', 'course_name', 'credits')
     search_fields = ('course_id', 'course_name')
 
-# Register the Result model
+
+# Admin interface for the Result model
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
     list_display = ('student', 'course', 'grade')
+    list_filter = ('course', 'grade')
     search_fields = ('student__user__username', 'course__course_name', 'grade')
-    list_filter = ('grade',)  # to filter results by grade
 
 
-# Admin model for Timetable
+# Admin interface for the Timetable model
+@admin.register(Timetable)
 class TimetableAdmin(admin.ModelAdmin):
-    list_display = ('course', 'day', 'time')  # Display course name, day, and time in the admin list view
-    list_filter = ('day', 'course')  # Add filters by day and course name
-    search_fields = ('course',)  # Enable search by course name
-    ordering = ('day', 'time')  # Order by day and time
+    list_display = ('course', 'day', 'time')
+    list_filter = ('day',)
+    search_fields = ('course__course_name', 'day')
 
-# Register the Timetable model in the admin site
-admin.site.register(Timetable, TimetableAdmin)

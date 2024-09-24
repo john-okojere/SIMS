@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
+from ims.models import Student
 # Customizing the Admin view for CustomUser model
 class CustomUserAdmin(UserAdmin):
     # Define the fields to display in the admin interface

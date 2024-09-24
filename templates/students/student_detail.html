@@ -6,11 +6,19 @@
     <h2>Student Detail</h2>
     <p><strong>Username:</strong> {{ student.user.username }}</p>
     <p><strong>Email:</strong> {{ student.user.email }}</p>
-    <p><strong>Year of Study:</strong> {{ student.year_of_study }}</p>
+    <p><strong>Current Level:</strong> {{ student.level }}</p>
     <p><strong>Courses Registered:</strong></p>
     <ul>
         {% for course in student.courses_registered.all %}
             <li>{{ course.course_name }} ({{ course.course_id }})</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Carry Over Courses:</strong></p>
+    <ul>
+        {% for course in student.carry_over.all %}
+            <li>{{ course.course_name }} ({{ course.course_id }})</li>
+        {% empty %}
+            <li>No failed course</li>
         {% endfor %}
     </ul>
     

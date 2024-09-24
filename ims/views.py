@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Student, Lecturer, Admin, ClinicStaff, Course, Result
+from .models import Student, Lecturer, Admin, ClinicStaff, Course, Result, Department
 
 def is_admin(user):
     return user.is_authenticated and user.groups.filter(name='Admin').exists()
@@ -20,15 +20,15 @@ class StudentDetailView(DetailView):
 
 class StudentCreateView(CreateView):
     model = Student
-    fields = ['user', 'year_of_study', 'courses_registered']
+    fields = ['level', 'department', 'courses_registered', 'carry_over']
     template_name = 'students/student_form.html'
     success_url = reverse_lazy('student_list')
 
 class StudentUpdateView(UpdateView):
     model = Student
-    fields = ['year_of_study', 'courses_registered']
+    fields = ['level', 'department', 'courses_registered', 'carry_over']
     template_name = 'students/student_form.html'
-    success_url = reverse_lazy('student_view_timetable')
+    success_url = reverse_lazy('level_adiviser_students')
 
 class StudentDeleteView(DeleteView):
     model = Student
@@ -172,6 +172,25 @@ class ResultDeleteView(DeleteView):
     template_name = 'results/result_confirm_delete.html'
     success_url = reverse_lazy('result_list')
 
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from .models import Student, Level
+@login_required
+def approve_student(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    lecturer = request.user.lecturer  # Assuming the user is logged in as a Lecturer
+
+    # Find the lecturer's level where they are the adviser
+    level = get_object_or_404(Level, adviser=lecturer, department=student.department)
+
+    if student.level.level == level.level:
+        # Approve student
+        student.approved = True
+        student.save()
+        return JsonResponse({'success': True, 'message': f'Student {student.user.username} has been approved.'})
+    
+    return JsonResponse({'success': False, 'message': 'Approval failed.'})
+
 # Dashboard view
 def dashboard(request):
     user = request.user
@@ -179,12 +198,16 @@ def dashboard(request):
     is_student = user.groups.filter(name='Student').exists()
     is_admin = user.is_superuser  # Use is_superuser for admin check
     is_clinic_staff = user.groups.filter(name='ClinicStaff').exists()
+    department = Department.objects.all()
+    level = Level.objects.all()
 
     context = {
         'is_lecturer': is_lecturer,
         'is_student': is_student,
         'is_admin': is_admin,
         'is_clinic_staff': is_clinic_staff,
+        'department':department,
+        'level':level,
     }
     return render(request, 'dashboard.html', context)
 
@@ -268,11 +291,13 @@ def register_courses(request):
 
 # View timetable for the registered courses
 def student_view_timetable(request):
-    student = request.user.student
-    timetable_entries = Timetable.objects.filter(course__in=student.courses_registered.all())
-    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]  # List of days
-    return render(request, 'students/student_timetable.html', {'timetable': timetable_entries, 'days': days})
-
+    try: 
+        student = request.user.student
+        timetable_entries = Timetable.objects.filter(course__in=student.courses_registered.all())
+        days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]  # List of days
+        return render(request, 'students/student_timetable.html', {'timetable': timetable_entries, 'days': days})
+    except:
+        return redirect('/')
 
 # View timetable for the registered courses
 def lecturer_view_timetable(request):
@@ -300,9 +325,12 @@ from django.http import JsonResponse
 
 def update_year_of_study(request):
     if request.method == 'POST':
-        year_of_study = request.POST.get('year_of_study')
-        if year_of_study.isdigit():
-            student = Student.objects.create(user=request.user, year_of_study = int(year_of_study))
+        year_of_study = request.POST.get('level')
+        department_val = request.POST.get('department')
+        department = Department.objects.get(id=department_val)
+        level = Level.objects.get(id=year_of_study, department=department)
+        if year_of_study:
+            student = Student.objects.create(user=request.user, level = level, department = department)
             student.save()
             return JsonResponse({'success': True, 'message': 'Year of study updated successfully!'})
         else:
@@ -310,10 +338,37 @@ def update_year_of_study(request):
 
     return render(request, 'update_year_of_study.html')
 
+from django.http import JsonResponse
+from .models import Level
+
+def get_levels(request, department_id):
+    levels = Level.objects.filter(department_id=department_id).values('id', 'level')
+    return JsonResponse({'levels': list(levels)})
+
+def level_adiviser(request):
+    level = Level.objects.get(adviser = request.user.lecturer)
+    students = Student.objects.filter(department = level.department, level=level, approved= False)
+    context = {
+        'levels':level,
+        'students':students
+    }
+    return render(request, 'lecturers/level_adviser.html', context)
+
+def level_adiviser_students(request):
+    level = Level.objects.get(adviser = request.user.lecturer)
+    students = Student.objects.filter(department = level.department, level=level, approved= True)
+    context = {
+        'levels':level,
+        'students':students
+    }
+    return render(request, 'lecturers/level_adviser_student.html', context)
+
+
 
 def update_department(request):
     if request.method == 'POST':
-        department = request.POST.get('department')
+        department_val = request.POST.get('department')
+        department = Department.objects.get(id=department_val)
         if department:
             lecturer = Lecturer.objects.create(user=request.user, department = department)
             lecturer.save()
