@@ -4,24 +4,73 @@
 
 {% block content %}
     <h2>Student Detail</h2>
-    <p><strong>Username:</strong> {{ student.user.username }}</p>
-    <p><strong>Email:</strong> {{ student.user.email }}</p>
-    <p><strong>Current Level:</strong> {{ student.level }}</p>
-    <p><strong>Courses Registered:</strong></p>
-    <ul>
-        {% for course in student.courses_registered.all %}
-            <li>{{ course.course_name }} ({{ course.course_id }})</li>
-        {% endfor %}
-    </ul>
-    <p><strong>Carry Over Courses:</strong></p>
-    <ul>
-        {% for course in student.carry_over.all %}
-            <li>{{ course.course_name }} ({{ course.course_id }})</li>
-        {% empty %}
-            <li>No failed course</li>
-        {% endfor %}
-    </ul>
-    
-    <a href="{% url 'student_update' student.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete</a>
+<br>
+    <!-- Personal Information Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Personal Information</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Username:</strong> {{ student.user.username }}</p>
+            <p><strong>Email:</strong> {{ student.user.email }}</p>
+            <p><strong>Matriculation Number:</strong> {{ student.matric }}</p>
+            <p><strong>Registration Number:</strong> {{ student.reg_no }}</p>
+            <p><strong>Phone Number:</strong> {{ student.phone }}</p>
+            <p><strong>Guardian Contact:</strong> {{ student.Gaurdian_contact }}</p>
+        </div>
+    </div>
+
+    <!-- Academic Information Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Academic Information</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Department:</strong> {{ student.department.name }}</p>
+            <p><strong>Level:</strong> {{ student.level }}</p>
+            <p><strong>Approved:</strong> {% if student.approved %} Yes {% else %} No {% endif %}</p>
+        </div>
+    </div>
+
+    <!-- Registered Courses Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Registered Courses</h4>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for course in student.courses_registered.all %}
+                    <li>{{ course.course_name }} ({{ course.course_id }}) - {{ course.credits }} Credits</li>
+                {% empty %}
+                    <li>No registered courses</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Carry Over Courses Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Carry Over Courses</h4>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for course in student.carry_over.all %}
+                    <li>{{ course.course_name }} ({{ course.course_id }}) - {{ course.credits }} Credits</li>
+                {% empty %}
+                    <li>No carry over courses</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+   {% if user.is_staff and user.lecturer.level.adviser %}
+      <!-- Action Buttons -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <a href="{% url 'student_update' student.id %}" class="btn btn-primary">Edit Student Details</a>
+            <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete Student</a>
+        </div>
+    </div>
+   {% endif %}
 {% endblock %}

@@ -1,56 +1,376 @@
 {
-    "students": [
-        {"username": "student1", "email": "student1@example.com", "year_of_study": 1},
-        {"username": "student2", "email": "student2@example.com", "year_of_study": 2},
-        {"username": "student3", "email": "student3@example.com", "year_of_study": 3},
-        {"username": "student4", "email": "student4@example.com", "year_of_study": 1},
-        {"username": "student5", "email": "student5@example.com", "year_of_study": 2},
-        {"username": "student6", "email": "student6@example.com", "year_of_study": 3},
-        {"username": "student7", "email": "student7@example.com", "year_of_study": 4},
-        {"username": "student8", "email": "student8@example.com", "year_of_study": 4}
+   "courses": [
+        {"course_id": "CSC101", "course_name": "Introduction to Computing", "credits": 3},
+        {"course_id": "CSC102", "course_name": "Data Structures", "credits": 3},
+        {"course_id": "CSC201", "course_name": "Algorithms", "credits": 3},
+        {"course_id": "CSC202", "course_name": "Computer Architecture", "credits": 4},
+        {"course_id": "CSC203", "course_name": "Operating Systems", "credits": 3},
+        {"course_id": "CSC204", "course_name": "Discrete Mathematics", "credits": 3},
+        {"course_id": "CSC205", "course_name": "Software Engineering", "credits": 3},
+        {"course_id": "CSC301", "course_name": "Database Systems", "credits": 3},
+        {"course_id": "CSC302", "course_name": "Artificial Intelligence", "credits": 3},
+        {"course_id": "CSC303", "course_name": "Computer Networks", "credits": 3},
+        {"course_id": "CSC304", "course_name": "Compiler Design", "credits": 3},
+        {"course_id": "CSC305", "course_name": "Human-Computer Interaction", "credits": 2},
+        {"course_id": "CSC306", "course_name": "Mobile Application Development", "credits": 3},
+        {"course_id": "CSC307", "course_name": "Cybersecurity", "credits": 4},
+        {"course_id": "CSC401", "course_name": "Cloud Computing", "credits": 3},
+        {"course_id": "CSC402", "course_name": "Machine Learning", "credits": 3},
+        {"course_id": "CSC403", "course_name": "Internet of Things (IoT)", "credits": 3},
+        {"course_id": "CSC404", "course_name": "Blockchain Technology", "credits": 3},
+        {"course_id": "CSC405", "course_name": "Big Data Analytics", "credits": 3},
+        {"course_id": "CSC406", "course_name": "Project Management", "credits": 3}
     ],
-    "lecturers": [
-        {"username": "lecturer1", "email": "lecturer1@example.com", "department": "Computer Science"},
-        {"username": "lecturer2", "email": "lecturer2@example.com", "department": "Mathematics"},
-        {"username": "lecturer3", "email": "lecturer3@example.com", "department": "Physics"},
-        {"username": "lecturer4", "email": "lecturer4@example.com", "department": "Biology"}
+  "lecturers": [
+        {
+            "username": "lecturer1", 
+            "email": "lecturer1@example.com", 
+            "department": "Computer Science", 
+            "courses_taught": ["CSC101", "CSC102", "CSC201"]
+        },
+        {
+            "username": "lecturer2", 
+            "email": "lecturer2@example.com", 
+            "department": "Mathematics", 
+            "courses_taught": ["CSC204", "CSC205", "CSC202"]
+        },
+        {
+            "username": "lecturer3", 
+            "email": "lecturer3@example.com", 
+            "department": "Physics", 
+            "courses_taught": ["CSC203", "CSC303", "CSC307"]
+        },
+        {
+            "username": "lecturer4", 
+            "email": "lecturer4@example.com", 
+            "department": "Biology", 
+            "courses_taught": ["CSC301", "CSC302", "CSC404"]
+        },
+        {
+            "username": "lecturer5", 
+            "email": "lecturer5@example.com", 
+            "department": "Mechanical Engineering", 
+            "courses_taught": ["CSC305", "CSC306", "CSC303"]
+        },
+        {
+            "username": "lecturer6", 
+            "email": "lecturer6@example.com", 
+            "department": "Computer Science", 
+            "courses_taught": ["CSC405", "CSC406", "CSC307"]
+        },
+        {
+            "username": "lecturer7", 
+            "email": "lecturer7@example.com", 
+            "department": "Mathematics", 
+            "courses_taught": ["CSC101", "CSC404", "CSC305"]
+        },
+        {
+            "username": "lecturer8", 
+            "email": "lecturer8@example.com", 
+            "department": "Physics", 
+            "courses_taught": ["CSC403", "CSC303", "CSC307"]
+        },
+        {
+            "username": "lecturer9", 
+            "email": "lecturer9@example.com", 
+            "department": "Biology", 
+            "courses_taught": ["CSC304", "CSC401", "CSC402"]
+        },
+        {
+            "username": "lecturer10",
+            "email": "lecturer10@example.com",
+            "department": "Computer Science",
+            "courses_taught": ["CSC401", "CSC402", "CSC405"]
+          },
+          {
+            "username": "lecturer11",
+            "email": "lecturer11@example.com",
+            "department": "Mathematics",
+            "courses_taught": ["CSC101", "CSC102", "CSC204"]
+          },
+          {
+            "username": "lecturer12",
+            "email": "lecturer12@example.com",
+            "department": "Physics",
+            "courses_taught": ["CSC305", "CSC202", "CSC307"]
+          },
+          {
+            "username": "lecturer13",
+            "email": "lecturer13@example.com",
+            "department": "Mechanical Engineering",
+            "courses_taught": ["CSC301", "CSC306", "CSC307"]
+          },
+          {
+            "username": "lecturer14",
+            "email": "lecturer14@example.com",
+            "department": "Biology",
+            "courses_taught": ["CSC302", "CSC303", "CSC404"]
+          },
+          {
+            "username": "lecturer15",
+            "email": "lecturer15@example.com",
+            "department": "Computer Science",
+            "courses_taught": ["CSC403", "CSC304", "CSC406"]
+          },
+          {
+            "username": "lecturer16",
+            "email": "lecturer16@example.com",
+            "department": "Mathematics",
+            "courses_taught": ["CSC101", "CSC205", "CSC405"]
+          },
+          {
+            "username": "lecturer17",
+            "email": "lecturer17@example.com",
+            "department": "Physics",
+            "courses_taught": ["CSC202", "CSC203", "CSC305"]
+          },
+          {
+            "username": "lecturer18",
+            "email": "lecturer18@example.com",
+            "department": "Mechanical Engineering",
+            "courses_taught": ["CSC401", "CSC402", "CSC405"]
+          },
+          {
+            "username": "lecturer19",
+            "email": "lecturer19@example.com",
+            "department": "Biology",
+            "courses_taught": ["CSC404", "CSC403", "CSC406"]
+          },
+          {
+            "username": "lecturer20",
+            "email": "lecturer20@example.com",
+            "department": "Computer Science",
+            "courses_taught": ["CSC203", "CSC204", "CSC305"]
+          }
     ],
     "admins": [
-        {"username": "admin1", "email": "admin1@example.com"},
-        {"username": "admin2", "email": "admin2@example.com"}
+        {"username": "admin1", "email": "admin1@example.com", "password":"test123werds"},
+        {"username": "admin2", "email": "admin2@example.com", "password":"test123werds"},
+        {"username": "admin9", "email": "admin9@example.com", "password":"test123werds"}
     ],
     "clinic_staff": [
-        {"username": "staff1", "email": "staff1@example.com"},
-        {"username": "staff2", "email": "staff2@example.com"}
-    ],
-    "courses": [
-        {"course_id": "CS101", "course_name": "Introduction to Computer Science", "credits": 3},
-        {"course_id": "CS102", "course_name": "Data Structures", "credits": 3},
-        {"course_id": "CS103", "course_name": "Web Development", "credits": 4},
-        {"course_id": "MAT101", "course_name": "Calculus I", "credits": 3},
-        {"course_id": "PHY101", "course_name": "Physics I", "credits": 4},
-        {"course_id": "BIO101", "course_name": "Biology I", "credits": 3},
-        {"course_id": "CS104", "course_name": "Algorithms", "credits": 4},
-        {"course_id": "CS105", "course_name": "Operating Systems", "credits": 3}
-    ],
-    "results": [
-        {"student_username": "student1", "course_id": "CS101", "grade": "A"},
-        {"student_username": "student2", "course_id": "CS102", "grade": "B"},
-        {"student_username": "student3", "course_id": "CS103", "grade": "C"},
-        {"student_username": "student4", "course_id": "MAT101", "grade": "A"},
-        {"student_username": "student5", "course_id": "PHY101", "grade": "B"},
-        {"student_username": "student6", "course_id": "BIO101", "grade": "A"},
-        {"student_username": "student7", "course_id": "CS104", "grade": "C"},
-        {"student_username": "student8", "course_id": "CS105", "grade": "B"}
+        {"username": "staff1", "email": "staff1@example.com", "password":"test123werds"},
+        {"username": "staff2", "email": "staff2@example.com", "password":"test123werds"}
     ],
     "timetables": [
-        {"day": "Monday", "course_name": "Introduction to Computer Science", "time": "8:00 AM - 9:00 AM"},
-        {"day": "Monday", "course_name": "Calculus I", "time": "9:00 AM - 10:00 AM"},
-        {"day": "Tuesday", "course_name": "Data Structures", "time": "10:00 AM - 12:00 PM"},
-        {"day": "Tuesday", "course_name": "Physics I", "time": "12:00 PM - 1:00 PM"},
-        {"day": "Wednesday", "course_name": "Web Development", "time": "1:00 PM - 3:00 PM"},
-        {"day": "Wednesday", "course_name": "Biology I", "time": "3:00 PM - 4:00 PM"},
-        {"day": "Thursday", "course_name": "Algorithms", "time": "8:00 AM - 10:00 AM"},
-        {"day": "Thursday", "course_name": "Operating Systems", "time": "10:00 AM - 12:00 PM"}
+        {"day": "Monday", "course_id": "CSC101", "course_name": "Introduction to Computing", "time": "8:00 AM - 9:00 AM"},
+        {"day": "Monday", "course_id": "CSC204", "course_name": "Calculus I", "time": "9:00 AM - 10:00 AM"},
+        {"day": "Tuesday", "course_id": "CSC102", "course_name": "Data Structures", "time": "10:00 AM - 12:00 PM"},
+        {"day": "Tuesday", "course_id": "CSC307", "course_name": "Physics I", "time": "12:00 PM - 1:00 PM"},
+        {"day": "Wednesday", "course_id": "CSC306", "course_name": "Web Development", "time": "1:00 PM - 3:00 PM"},
+        {"day": "Wednesday", "course_id": "CSC301", "course_name": "Biology I", "time": "3:00 PM - 4:00 PM"},
+        {"day": "Thursday", "course_id": "CSC201", "course_name": "Algorithms", "time": "8:00 AM - 10:00 AM"},
+        {"day": "Thursday", "course_id": "CSC203", "course_name": "Operating Systems", "time": "10:00 AM - 12:00 PM"},
+        {"day": "Monday", "course_id": "CSC101", "course_name": "Introduction to Computing", "time": "9:00 AM - 10:30 AM"}
+      ],
+
+    "departments": [
+        {"name": "Computer Science"},
+        {"name": "Mechanical Engineering"},
+        {"name": "Mathematics"},
+        {"name": "Physics"},
+        {"name": "Biology"}
+    ],
+    "levels": [
+        {"level": "100", "department": "Computer Science", "adviser": "lecturer1"},
+        {"level": "200", "department": "Computer Science", "adviser": "lecturer2"},
+        {"level": "300", "department": "Computer Science", "adviser": "lecturer3"},
+        {"level": "400", "department": "Computer Science", "adviser": "lecturer4"},
+
+        {"level": "100", "department": "Mechanical Engineering", "adviser": "lecturer5"},
+        {"level": "200", "department": "Mechanical Engineering", "adviser": "lecturer6"},
+        {"level": "300", "department": "Mechanical Engineering", "adviser": "lecturer9"},
+        {"level": "400", "department": "Mechanical Engineering", "adviser": "lecturer8"},
+
+        {"level": "100", "department": "Mathematics", "adviser": "lecturer7"},
+        {"level": "200", "department": "Mathematics", "adviser": "lecturer10"},
+        {"level": "300", "department": "Mathematics", "adviser": "lecturer11"},
+        {"level": "400", "department": "Mathematics", "adviser": "lecturer12"},
+
+        {"level": "100", "department": "Physics", "adviser": "lecturer13"},
+        {"level": "200", "department": "Physics", "adviser": "lecturer14"},
+        {"level": "300", "department": "Physics", "adviser": "lecturer15"},
+        {"level": "400", "department": "Physics", "adviser": "lecturer16"},
+
+        {"level": "100", "department": "Biology", "adviser": "lecturer17"},
+        {"level": "200", "department": "Biology", "adviser": "lecturer18"},
+        {"level": "300", "department": "Biology", "adviser": "lecturer19"},
+        {"level": "400", "department": "Biology", "adviser": "lecturer20"}
+    ],
+    "students": [
+        {
+            "username": "student1",
+            "email": "student1@example.com",
+            "department": "Computer Science",
+            "level": "100",
+            "matric": "123456",
+            "courses_registered": ["CSC101"],
+            "carry_over": []
+        },
+        {
+            "username": "john_doe",
+            "email": "john.doe@example.com",
+            "level": "200",
+            "matric": "AFIT123456",
+            "reg_no": "REG2001",
+            "phone": "08012345678",
+            "Gaurdian_contact": "09098765432",
+            "department": "Computer Science",
+            "courses_registered": ["CSC101", "CSC201", "CSC205"],
+            "carry_over": ["CSC102"]
+        },
+        {
+            "username": "jane_smith",
+            "email": "jane.smith@example.com",
+            "level": "300",
+            "matric": "AFIT654321",
+            "reg_no": "REG3001",
+            "phone": "08087654321",
+            "Gaurdian_contact": "09012345678",
+            "department": "Computer Science",
+            "courses_registered": ["CSC301", "CSC303", "CSC305"],
+            "carry_over": ["CSC201"]
+        },
+        {
+            "username": "emma_brown",
+            "email": "emma.brown@example.com",
+            "level": "400",
+            "matric": "AFIT789123",
+            "reg_no": "REG4001",
+            "phone": "08065432109",
+            "Gaurdian_contact": "09056789012",
+            "department": "Physics",
+            "courses_registered": ["CSC401", "CSC402", "CSC403"],
+            "carry_over": []
+        },
+        {
+            "username": "liam_jones",
+            "email": "liam.jones@example.com",
+            "level": "400",
+            "matric": "AFIT246810",
+            "reg_no": "REG4001",
+            "phone": "08043210987",
+            "Gaurdian_contact": "09009876543",
+            "department": "Biology",
+            "courses_registered": ["CSC307", "CSC403", "CSC405"],
+            "carry_over": ["CSC303"]
+        },
+        {
+            "username": "olivia_williams",
+            "email": "olivia.williams@example.com",
+            "level": "200",
+            "matric": "AFIT121212",
+            "reg_no": "REG2002",
+            "phone": "08056789012",
+            "Gaurdian_contact": "09087654321",
+            "department": "Computer Science",
+            "courses_registered": ["CSC101", "CSC102", "CSC202"],
+            "carry_over": []
+        },
+        {
+            "username": "noah_davis",
+            "email": "noah.davis@example.com",
+            "level": "300",
+            "matric": "AFIT343434",
+            "reg_no": "REG3002",
+            "phone": "08087654322",
+            "Gaurdian_contact": "09056789013",
+            "department": "Computer Science",
+            "courses_registered": ["CSC301", "CSC304", "CSC306"],
+            "carry_over": ["CSC204"]
+        },
+        {
+            "username": "ava_miller",
+            "email": "ava.miller@example.com",
+            "level": "400",
+            "matric": "AFIT565656",
+            "reg_no": "REG4002",
+            "phone": "08065432101",
+            "Gaurdian_contact": "09043210987",
+            "department": "Computer Science",
+            "courses_registered": ["CSC402", "CSC404", "CSC405"],
+            "carry_over": []
+        },
+        {
+            "username": "sophia_garcia",
+            "email": "sophia.garcia@example.com",
+            "level": "100",
+            "matric": "AFIT787878",
+            "reg_no": "REG1001",
+            "phone": "08012344000",
+            "Gaurdian_contact": "09098765433",
+            "department": "Biology",
+            "courses_registered": ["CSC101", "CSC102", "CSC201"],
+            "carry_over": []
+        },
+        {
+            "username": "elijah_martinez",
+            "email": "elijah.martinez@example.com",
+            "level": "400",
+            "matric": "AFIT909090",
+            "reg_no": "REG4002",
+            "phone": "08098765432",
+            "Gaurdian_contact": "09012345679",
+            "department": "Biology",
+            "courses_registered": ["CSC306", "CSC307", "CSC405"],
+            "carry_over": ["CSC303", "CSC305"]
+        },
+        {
+            "username": "mia_rodriguez",
+            "email": "mia.rodriguez@example.com",
+            "level": "300",
+            "matric": "AFIT000000",
+            "reg_no": "REG3003",
+            "phone": "08054321098",
+            "Gaurdian_contact": "09087654333",
+            "department": "Computer Science",
+            "courses_registered": ["CSC201", "CSC205", "CSC301"],
+            "carry_over": ["CSC202"]
+        }
+        
+    ],
+    
+    "results": [
+        {"student_username": "student1", "course_id": "CSC101", "grade": "A"},
+        {"student_username": "john_doe", "course_id": "CSC101", "grade": "A"},
+        {"student_username": "john_doe", "course_id": "CSC201", "grade": "B"},
+        {"student_username": "john_doe", "course_id": "CSC205", "grade": "A"},
+    
+        {"student_username": "jane_smith", "course_id": "CSC301", "grade": "B"},
+        {"student_username": "jane_smith", "course_id": "CSC303", "grade": "C"},
+        {"student_username": "jane_smith", "course_id": "CSC305", "grade": "B"},
+    
+        {"student_username": "emma_brown", "course_id": "CSC401", "grade": "A"},
+        {"student_username": "emma_brown", "course_id": "CSC402", "grade": "A"},
+        {"student_username": "emma_brown", "course_id": "CSC403", "grade": "B"},
+    
+        {"student_username": "liam_jones", "course_id": "CSC307", "grade": "B"},
+        {"student_username": "liam_jones", "course_id": "CSC403", "grade": "A"},
+        {"student_username": "liam_jones", "course_id": "CSC405", "grade": "B"},
+    
+        {"student_username": "olivia_williams", "course_id": "CSC101", "grade": "A"},
+        {"student_username": "olivia_williams", "course_id": "CSC102", "grade": "B"},
+        {"student_username": "olivia_williams", "course_id": "CSC202", "grade": "A"},
+    
+        {"student_username": "noah_davis", "course_id": "CSC301", "grade": "B"},
+        {"student_username": "noah_davis", "course_id": "CSC304", "grade": "A"},
+        {"student_username": "noah_davis", "course_id": "CSC306", "grade": "C"},
+    
+        {"student_username": "ava_miller", "course_id": "CSC402", "grade": "A"},
+        {"student_username": "ava_miller", "course_id": "CSC404", "grade": "A"},
+        {"student_username": "ava_miller", "course_id": "CSC405", "grade": "B"},
+    
+        {"student_username": "sophia_garcia", "course_id": "CSC101", "grade": "A"},
+        {"student_username": "sophia_garcia", "course_id": "CSC102", "grade": "B"},
+        {"student_username": "sophia_garcia", "course_id": "CSC205", "grade": "B"},
+    
+        {"student_username": "elijah_martinez", "course_id": "CSC306", "grade": "B"},
+        {"student_username": "elijah_martinez", "course_id": "CSC307", "grade": "A"},
+        {"student_username": "elijah_martinez", "course_id": "CSC405", "grade": "C"},
+    
+        {"student_username": "mia_rodriguez", "course_id": "CSC201", "grade": "B"},
+        {"student_username": "mia_rodriguez", "course_id": "CSC205", "grade": "A"},
+        {"student_username": "mia_rodriguez", "course_id": "CSC301", "grade": "B"}
+    
     ]
 }

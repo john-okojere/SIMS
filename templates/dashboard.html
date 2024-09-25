@@ -423,7 +423,7 @@ document.getElementById('department').addEventListener('change', function () {
                 fetch("{% url 'update_department' %}", {
                     method: "POST",
                     headers: {
-                        'X-CSRFToken': '{% csrf_token %}',
+                        'X-CSRFToken': '{{ csrf_token }}',
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: new URLSearchParams({
@@ -486,6 +486,22 @@ document.getElementById('department').addEventListener('change', function () {
             </div>
             <div class="modal-body">
                 <form id="yearOfStudyForm">
+                    <div>
+                        <label for="matricInput">Enter Matric No</label>
+                        <input type="text" id="matricInput" name="matric">
+                    </div>
+                    <div>
+                        <label for="RegInput">Enter Reg No</label>
+                        <input type="text" id="RegInput" name="reg_no">
+                    </div>
+                    <div>
+                        <label for="PhoneInput">Enter Phone No</label>
+                        <input type="text" id="PhoneInput" name="phone">
+                    </div>
+                    <div>
+                        <label for="G_PhoneInput">Enter Gaurdian Phone No</label>
+                        <input type="text" id="G_PhoneInput" name="Gaurdian_contact">
+                    </div>
                     <!-- Department Dropdown -->
                     <div class="mb-3">
                         <label for="departmentSelect" class="form-label">Department</label>
@@ -541,17 +557,25 @@ document.getElementById('department').addEventListener('change', function () {
         event.preventDefault();
         
         const departmentId = document.getElementById('departmentSelect').value;
+        const matric = document.getElementById('matricInput').value;
+        const reg_no = document.getElementById('RegInput').value;
+        const phone = document.getElementById('PhoneInput').value;
+        const Gaurdian_contact = document.getElementById('G_PhoneInput').value;
         const levelId = document.getElementById('levelSelect').value;
 
         fetch("{% url 'update_year_of_study' %}", {
             method: "POST",
             headers: {
-                'X-CSRFToken': '{% csrf_token %}',
+                'X-CSRFToken': '{{ csrf_token }}',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams({
                 'department': departmentId,
                 'level': levelId,
+                'matric':matric,
+                'reg_no':reg_no,
+                'phone':phone,
+                'Gaurdian_contact':Gaurdian_contact,
             })
         })
         .then(response => response.json())

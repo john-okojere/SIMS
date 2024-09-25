@@ -14,7 +14,6 @@
             <img src="{% static 'img/Picture1.gif' %}" alt="" style="height: 60px;">
         </a>
        <div>
-        
         <!-- Hamburger Menu Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,7 +36,6 @@
                         <a class="dropdown-item" href="{% url 'lecturer_list' %}">Lecturers</a>
                         <a class="dropdown-item" href="{% url 'course_list' %}">Courses</a>
                         <a class="dropdown-item" href="{% url 'result_list' %}">Results</a>
-                        <a class="dropdown-item" href="{% url 'clinicstaff_list' %}">Clinic Staff</a>
                     </div>
                 </li>
                 {% endif %}
@@ -58,7 +56,6 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'student_register' %}">Register as Student</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'staff_register' %}">Register as Staff</a></li>
-
                 {% endif %}
             </ul>
         </div>

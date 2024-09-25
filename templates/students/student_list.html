@@ -4,29 +4,155 @@
 
 {% block content %}
     <h2>Student List</h2>
-    <a href="{% url 'student_create' %}" class="btn btn-primary my-3">Add New Student</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Year of Study</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in students %}
+    <br>
+ <!-- Group for 100 Level Students -->
+<h4>100 Level Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+            {% if student.level.level == '100' %}
                 <tr>
                     <td>{{ student.id }}</td>
                     <td>{{ student.user.username }}</td>
-                    <td>{{ student.year_of_study }}</td>
+                    <td>{{ student.level }}</td>
                     <td>
                         <a href="{% url 'student_detail' student.id %}" class="btn btn-info">View</a>
                         <a href="{% url 'student_update' student.id %}" class="btn btn-warning">Edit</a>
                         <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<!-- Group for 200 Level Students -->
+<h4>200 Level Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+            {% if student.level.level == '200' %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.level }}</td>
+                    <td>
+                        <a href="{% url 'student_detail' student.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'student_update' student.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<!-- Group for 200 Level Students -->
+<h4>300 Level Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+            {% if student.level.level == '300' %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.level }}</td>
+                    <td>
+                        <a href="{% url 'student_detail' student.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'student_update' student.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<!-- Group for 200 Level Students -->
+<h4>400 Level Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+            {% if student.level.level == '400' %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.level }}</td>
+                    <td>
+                        <a href="{% url 'student_detail' student.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'student_update' student.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<!-- Group for 200 Level Students -->
+<h4>500 Level Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+            {% if student.level.level == '500' %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.level }}</td>
+                    <td>
+                        <a href="{% url 'student_detail' student.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'student_update' student.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'student_delete' student.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+<!-- Repeat the same for 300, 400, and 500 Level Students -->
+
 {% endblock %}

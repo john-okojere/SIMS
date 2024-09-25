@@ -37,6 +37,10 @@ class Level(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    matric = models.CharField(max_length=50, blank=True, null=True)
+    reg_no = models.CharField(max_length=50, blank=True, null=True)
+    phone = models.CharField(max_length=50, blank=True, null=True)
+    Gaurdian_contact = models.CharField(max_length=50, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     courses_registered = models.ManyToManyField('Course', related_name='students')
     carry_over = models.ManyToManyField('Course', null=True, blank=True)

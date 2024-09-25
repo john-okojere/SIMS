@@ -26,9 +26,9 @@ class StudentCreateView(CreateView):
 
 class StudentUpdateView(UpdateView):
     model = Student
-    fields = ['level', 'department', 'courses_registered', 'carry_over']
+    fields = ['level', 'department', 'courses_registered', 'carry_over', 'approved']
     template_name = 'students/student_form.html'
-    success_url = reverse_lazy('level_adiviser_students')
+    success_url = reverse_lazy('dashboard')
 
 class StudentDeleteView(DeleteView):
     model = Student
@@ -53,9 +53,9 @@ class LecturerCreateView(CreateView):
 
 class LecturerUpdateView(UpdateView):
     model = Lecturer
-    fields = ['department', 'courses_taught']
+    fields = ['department', 'courses_taught', 'approved']
     template_name = 'lecturers/lecturer_form.html'
-    success_url = reverse_lazy('lecturer_profile')
+    success_url = reverse_lazy('dashboard')
 
 class LecturerDeleteView(DeleteView):
     model = Lecturer
@@ -325,12 +325,16 @@ from django.http import JsonResponse
 
 def update_year_of_study(request):
     if request.method == 'POST':
+        matric = request.POST.get('matric')
+        reg_no = request.POST.get('reg_no')
+        phone = request.POST.get('phone')
+        Gaurdian_contact = request.POST.get('Gaurdian_contact')
         year_of_study = request.POST.get('level')
         department_val = request.POST.get('department')
         department = Department.objects.get(id=department_val)
         level = Level.objects.get(id=year_of_study, department=department)
         if year_of_study:
-            student = Student.objects.create(user=request.user, level = level, department = department)
+            student = Student.objects.create(user=request.user, level = level, department = department,matric=matric, reg_no=reg_no, phone=phone, Gaurdian_contact=Gaurdian_contact)
             student.save()
             return JsonResponse({'success': True, 'message': 'Year of study updated successfully!'})
         else:
