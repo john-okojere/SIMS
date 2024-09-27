@@ -126,7 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'ims/static'),  # Tells Django where your static files are stored
 ]
-STATIC_ROOT = 'static'
+STATIC_ROOT = 'ims/static/'
 
 
 # Default primary key field type

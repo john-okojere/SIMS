@@ -17,15 +17,9 @@ class StudentRegisterForm(UserCreationForm):
 
 # Lecturer/Clinic Staff Registration Form
 class StaffRegisterForm(UserCreationForm):
-    role = forms.ChoiceField(choices=[('LECTURER', 'Lecturer'), ('CLINIC_STAFF', 'Clinic Staff')])
     
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'password1', 'password2']
     
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.role = self.cleaned_data['role']
-        if commit:
-            user.save()
-        return user
+    
